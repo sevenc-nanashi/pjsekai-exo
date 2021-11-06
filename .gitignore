@@ -1,0 +1,6 @@
+dist/*
+!dist/.gitkeep
+test*
+score.json
+score_data.json
+*.swp
