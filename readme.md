@@ -10,9 +10,17 @@
 8. シーンを設定する（ToDo：設定しなくてもいいようにする）
 
 ## 注意
-動画の概要欄などにこの文章を貼ってください：
+動画の概要欄などに、自分の
+- 名前（`名無し｡`）
+- Twitterのプロフィール
+- このリポジトリへのリンク
+- YouTubeのチャンネル
+が分かる文章を載せて下さい。
+#### 例
 ```
-プロセカ風exoファイルジェネレーター作成：名無し｡
-https://twitter.com/sevenc_nanashi
-https://youtube.com/channel/UCv9Wgrqn0ovYhUggSSm5Qtg
+プロセカ風exoファイルジェネレーター：
+  https://github.com/sevenc-nanashi/pjsekai-exo
+  作成：名無し｡  
+  Twitter: https://twitter.com/sevenc_nanashi
+  YouTube: https://youtube.com/channel/UCv9Wgrqn0ovYhUggSSm5Qtg
 ```
