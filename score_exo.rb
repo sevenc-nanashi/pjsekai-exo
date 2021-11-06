@@ -1,6 +1,6 @@
 require "json"
-require "ricecream"
-Ricecream.colorize = true
+# require "ricecream"
+# Ricecream.colorize = true
 x_positions = [-559.0, -535.0, -511.0, -487.0, -463.0, -440.0, -416.0, -390.0]
 # #region digit_base
 digit_base = <<~'INI'
