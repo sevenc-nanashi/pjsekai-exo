@@ -56,7 +56,7 @@ res << <<~'INI'
   [1]
   start=1
   end=!vend!
-  layer=14
+  layer=13
   overlay=1
   camera=0
   [1.0]
@@ -164,27 +164,27 @@ before_clip_x = 654
 # 362, 614
 def get_width(score)
   # 276
-  w = case score
-    when ..21500
-      score / 21500.0 * 276.0
-    when ..434000
-      (score - 21500) / (434000 - 21500) * 84.5 + 276.0
-    when ..940000
-      (score - 434000) / (940000 - 434000) * 84.5 + 84.5 + 276.0
-    when ..1165000
-      (score - 940000) / (1165000 - 940000) * 84.5 + 84.5 * 2 + 276.0
-    when ..1300000
-      (score - 1165000) / (1300000 - 1165000) * 84.5 + 84.5 * 3 + 276.0
-    else
-      614
-    end
-  w /= 614.0
-  654 - (654 - 42) * w
+  #651..43
+  # 380, 292, 200, 110
+  case score
+  when ..21500
+    651 - score / 21500.0 * (651 - 380)
+  when ..434000
+    380 - (score - 21500) / (434000 - 21500.0) * (380 - 292)
+  when ..940000
+    292 - (score - 434000) / (940000 - 434000.0) * (292 - 200)
+  when ..1165000
+    200 - (score - 940000) / (1165000 - 940000.0) * (200 - 110)
+  when ..1300000
+    110 - (score - 1165000) / (1300000 - 1165000.0) * (110 - 43)
+  else
+    43
+  end
 end
 
 scores.each do |time, score|
   clip_x = get_width(score)
-  next if (time * 60).floor == 0 or bar_last_time.round == time.round
+  next if (time * 60).floor == 0 or bar_last_time == time
   res << <<~INI
     [#{num}]
     start=#{(bar_last_time * 60 + 61).floor}
@@ -220,7 +220,7 @@ end
 # #region add last bar
 res << <<~INI
   [#{num}]
-  start=#{(bar_last_time * 60 + 1).floor}
+  start=#{(bar_last_time * 60 + 61).floor}
   end=!vend!
   layer=12
   overlay=1
@@ -269,7 +269,7 @@ add_base = <<~INI
   Y=-292.0,-292.0,1
   Z=0.0,0.0,1
   拡大率=65.00
-  透明度=80.0,!alpha!,1
+  透明度=50.0,!alpha!,1
   回転=0.00
   blend=0
 INI
@@ -315,7 +315,7 @@ scores.each_with_index do |(time, score), index|
         .gsub(/!end!/, (next_time * 60 - 1).floor.to_s)
         .gsub(/!x1!/, x1.to_s)
         .gsub(/!x2!/, x2.to_s)
-        .gsub(/!alpha!/, (pers * 80).to_s)
+        .gsub(/!alpha!/, ((1 - pers) * 50).to_s)
         .gsub(/!layer!/, (SCORE_LAYER + i).to_s)
         .gsub(/!image!/, "#{c}")
       num += 1
