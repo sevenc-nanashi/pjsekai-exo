@@ -4,3 +4,6 @@ test*
 score.json
 score_data.json
 *.swp
+exos/04_score.exo
+exos/05_score_add.exo
+exos/06_combos.exo
