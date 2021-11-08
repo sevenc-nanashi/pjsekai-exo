@@ -37,11 +37,11 @@ notes.each.with_index(1) do |note, index|
   combo_bonus = 0.01 * (index / 100) + 1
   scores << [
     note[:data][:values][0],
-    (scores[-1]&.[](1) || 0) + (total_pow / heavy_notes) \
+    (scores[-1]&.[](1) || 0) + ((total_pow / heavy_notes) \
       * 4 \
       * get_heavy_notes(note[:archetype]) \
       * combo_bonus \
-      * level_fax,
+      * level_fax).round,
   ]
 end
 
