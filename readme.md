@@ -1,6 +1,6 @@
 # プロセカ風exoファイルジェネレーター
 
-1. `gem install httprb` する
+1. `gem install http` する
 2. 1334x750, 60fpsでプロジェクトを作成
 3. level_data.rbを実行する
 4. calc_score.rbを実行する
