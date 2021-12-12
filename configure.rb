@@ -4,7 +4,7 @@ exos = Dir.glob("./exos/*.exo")
 
 questions = {
   "background": "背景のファイルの場所はどこですか？（FriedPotatoで作成することをお勧めします）",
-  "assets": "assets.zipを解凍したフォルダはどこですか？",
+  "assets": "assetsフォルダはどこですか？",
   "movie": "プレイ動画はどこですか？",
   "jacket": "ジャケット画像はどこですか？",
 }
