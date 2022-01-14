@@ -20,7 +20,9 @@ end
 exos.each do |exo|
   contents = File.read(exo, encoding: Encoding::SJIS).encode("UTF-8")
   answers.each do |key, value|
-    contents.gsub!("!!#{key}!!", value)
+    contents.gsub!("!!#{key}!!", value
+      .gsub("/", "\\").tap { puts _1 }
+      .gsub("\\", "\\\\\\\\").tap { puts _1 })
   end
   File.write(exo.sub("exos", "dist"), contents, encoding: Encoding::SJIS)
 end
