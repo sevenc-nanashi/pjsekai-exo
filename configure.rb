@@ -17,12 +17,17 @@ questions.each do |key, value|
   answers[key] = answer.gsub("/", "\\")
 end
 
+def process_path(value)
+  value
+    .gsub("/", "\\")
+    .gsub("\\", "\\\\\\\\")
+    .gsub(/^"|"$/, "")
+end
+
 exos.each do |exo|
   contents = File.read(exo, encoding: Encoding::SJIS).encode("UTF-8")
   answers.each do |key, value|
-    contents.gsub!("!!#{key}!!", value
-      .gsub("/", "\\")
-      .gsub("\\", "\\\\\\\\"))
+    contents.gsub!("!!#{key}!!", process_path(value))
   end
   File.write(exo.sub("exos", "dist"), contents, encoding: Encoding::SJIS)
 end
