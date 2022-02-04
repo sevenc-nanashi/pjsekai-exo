@@ -8,7 +8,7 @@ questions = {
   "movie": "プレイ動画はどこですか？",
   "jacket": "ジャケット画像はどこですか？",
 }
-puts "\e[93mexoファイルの設定を行います。\e[m"
+puts "\e[93mファイルの設定を行います。\e[m"
 answers = {}
 questions.each do |key, value|
   puts value
@@ -22,6 +22,7 @@ def process_path(value)
     .gsub("/", "\\")
     .gsub("\\", "\\\\\\\\")
     .gsub(/^"|"$/, "")
+    .gsub(/\\$/, "")
 end
 
 exos.each do |exo|
@@ -32,4 +33,10 @@ exos.each do |exo|
   File.write(exo.sub("exos", "dist"), contents, encoding: Encoding::SJIS)
 end
 
-puts "\e[92mexoファイルの設定が完了しました。\e[m"
+content = File.read("./data.base.txt")
+answers.each do |key, value|
+  content.gsub!("!!#{key}!!", process_path(value))
+end
+
+puts "\e[92mファイルの設定が完了しました。\e[m"
+File.write("./data.txt", content)
