@@ -3,7 +3,7 @@ require "json"
 scores = File.read("./score.json")
   .then { JSON.parse(_1, symbolize_names: true) }
 scores = scores
-  .map.with_index(1) { |s, i| [*s, i] }
+  .map.with_index(1) { |s, i| [*s, i == 1 ? 0 : s[1].round - scores[i - 2][1].round, i] }
   .reverse.uniq { |s| s[0] }.reverse
 
 def get_width(score)
@@ -32,12 +32,12 @@ File.open("./data.base.txt", "w") do |file|
   file.puts "p|!!assets!!"
   scores.each_with_index do |score, i|
     file.write "s|#{score[0]}:#{score[1]}:"
-    file.write "#{score[1].round - (i == 0 ? 0 : scores[i - 1][1].round)}:"
+    file.write "#{score[2]}:"
     file.write "#{get_width(score[1])}:"
     ranks.to_a.select { |rank, l_score| score[1] >= l_score }.last&.then(&:first).then do |rank|
       file.write "#{rank || "n"}:"
     end
-    file.write("#{score[2]}")
+    file.write("#{score[3]}")
     file.puts
   end
 end
