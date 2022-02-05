@@ -250,10 +250,10 @@ if time > 0 then
         digit = combo_str:sub(i, i)
         shift = -(#combo_str / 2) + i - 0.5
         obj.load("image", path.."\\perfect.png")
-        progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 2)
+        progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 4)
         if progress < 1 then
-            obj.draw(0, 90, 0, 0.3 + 0.4 * progress, progress * 0.5 + 0.5)
-        elseif progress < 10 then
+            obj.draw(0, 90, 0, 0.3 + 0.4 * progress, progress)
+        elseif progress < 5 then
             obj.draw(0, 90, 0, 0.7, 1)
         end
     end
