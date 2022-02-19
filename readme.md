@@ -1,9 +1,9 @@
 # プロセカ風exoファイルジェネレーター
 
 ## 必須事項
-・[Ruby 3.0 以上](https://www.ruby-lang.org/ja/documentation/installation/)
-・[AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/)
-・拡張編集プラグイン
+- [Ruby 3.0 以上](https://www.ruby-lang.org/ja/documentation/installation/)
+- [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/)
+- 拡張編集プラグイン
 
 ## 新利用方法
 
@@ -17,6 +17,7 @@
 11. `@main.obj` ファイルをAviUtlのディレクトリの`/Plugins/script`に`@プロセカ.obj`としてコピーする
 12. シーンを設定する（ToDo：設定しなくてもいいようにする）
 13. カスタムオブジェクトの`判定@プロセカ`、`スコア@プロセカ`、`コンボ@プロセカ`を配置する 
+14. カスタムオブジェクトの`参照`を6で生成されたdata.txtにする
 
 
 ## 旧利用方法
