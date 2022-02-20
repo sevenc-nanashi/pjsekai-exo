@@ -1,9 +1,21 @@
 # プロセカ風exoファイルジェネレーター
 
 ## 必須事項
-・[Ruby 3.0 以上](https://www.ruby-lang.org/ja/documentation/installation/)
-・[AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/)
-・拡張編集プラグイン
+- [Ruby 3.0 以上](https://www.ruby-lang.org/ja/documentation/installation/)
+- [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/)
+- 拡張編集プラグイン
+
+## 動画の作り方
+
+1. [譜面を作る](https://wiki.purplepalette.net/create-charts)
+2. Sonolusで譜面を撮影する
+- [FriedPotato](https://fp.sevenc7c.com)での撮影を推奨しています。
+- UIは消してください。不透明度を0%にするか、（FriedPotatoの場合は）`Hide UI`オプションを使えば消せます。
+3. 動画を転送する
+- Google Driveなどで。
+4. [ffmpeg](https://www.ffmpeg.org/)で再エンコードする
+- AviUtlで読み込むため。
+5. 下の利用方法に従ってUIを後付けする。
 
 ## 新利用方法
 
@@ -15,7 +27,6 @@
 5.  シーンを設定する（ToDo：設定しなくてもいいようにする）
 6.  カスタムオブジェクトの`判定@プロセカ`、`スコア@プロセカ`、`コンボ@プロセカ`を配置する 
 7.  カスタムオブジェクトの`参照`を3で生成されたdata.txtにする
-
 
 ## 旧利用方法
 
