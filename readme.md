@@ -28,22 +28,7 @@ pjsekai-exo とは、UI がないプレイ動画にプロセカ風の UI を付�
 4.  `@main.obj` ファイルをAviUtlのディレクトリの`/Plugins/scripts`に`@プロセカ.obj`としてコピーする
 5.  シーンを設定する（ToDo：設定しなくてもいいようにする）
 6.  カスタムオブジェクトの`判定@プロセカ`、`スコア@プロセカ`、`コンボ@プロセカ`を配置する 
-7.  カスタムオブジェクトの`参照`を3で生成されたdata.txtにする
-
-<details>
-  <summary>旧利用方法</summary>
-  <ol>
-    <li>1334x750, 60fps でプレイ動画を作成</li>
-    <li><code>gem install http</code> を実行する</li>
-    <li><code>ruby level_data.rb</code> を実行し、関係する情報を入力する</li>
-    <li><code>ruby calc_score.rb</code> を実行し、関係する情報を入力する</li>
-    <li><code>ruby score_exo.rb</code> を実行する</li>
-    <li><code>ruby combo.rb</code> を実行する</li>
-    <li><code>ruby configure.rb</code> を実行し、関係する情報を入力する</li>
-    <li>dist にある exo ファイルを順に AviUtl に（拡張編集プラグインを入れた上、メニュー→「拡張機能の設定」から）読み込む</li>
-    <li>シーンを設定する（ToDo：設定しなくてもいいようにする）</li>
-  </ol>
-</details>
+7.  カスタムオブジェクトの`参照`を3で生成されたdata.pedにする
 
 ## 注意
 動画の概要欄などに、自分の

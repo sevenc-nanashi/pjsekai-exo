@@ -1,6 +1,6 @@
 require "json"
 
-scores = File.read("./score.json")
+scores = File.read("./data/score.json")
   .then { JSON.parse(_1, symbolize_names: true) }
 scores = scores
   .map.with_index(1) { |s, i| [*s, i == 1 ? 0 : s[1].round - scores[i - 2][1].round, i] }
@@ -28,7 +28,7 @@ end
 
 ranks = { "c" => 21500, "b" => 434000, "a" => 940000, "s" => 1165000 }
 
-File.open("./data.base.txt", "w") do |file|
+File.open("./data/base.txt", "w") do |file|
   file.puts "p|!!assets!!"
   scores.each_with_index do |score, i|
     file.write "s|#{score[0]}:#{score[1]}:"

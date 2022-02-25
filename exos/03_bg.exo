@@ -1,8 +1,8 @@
 [exedit]
 width=1334
 height=750
-rate=60060
-scale=1001
+rate=60
+scale=1
 length=179
 audio_rate=44100
 audio_ch=2

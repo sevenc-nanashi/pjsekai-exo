@@ -1,2 +1,3 @@
-call gem install http
+@echo off
+call bundle install
 pause

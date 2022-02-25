@@ -1,4 +1,7 @@
 require "json"
+require "tty-prompt"
+
+prompt = TTY::Prompt.new
 puts "\e[93mスコアを計算します。\e[m"
 
 def get_heavy_notes(type)
@@ -17,9 +20,9 @@ def get_heavy_notes(type)
 end
 
 level = 30
-puts "総合力を入力して下さい。"
-print "\e[90m>> \e[m"
-total_pow = gets.chomp.to_i
+total_pow = prompt.ask("総合力を入力して下さい:") do |q|
+  q.validate(/\d+/, "数値を入力してください。")
+end.to_i
 level_fax = (level - 5) * 0.005 + 1
 notes = []
 JSON.parse(File.read("score_data.json"), symbolize_names: true)[:entities][3..].each do |entity|
@@ -45,4 +48,4 @@ notes.each.with_index(1) do |note, index|
   ]
 end
 
-File.write("score.json", scores.to_json)
+File.write("data/score.json", scores.to_json)
