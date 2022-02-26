@@ -25,7 +25,7 @@ total_pow = prompt.ask("総合力を入力して下さい:") do |q|
 end.to_i
 level_fax = (level - 5) * 0.005 + 1
 notes = []
-JSON.parse(File.read("score_data.json"), symbolize_names: true)[:entities][3..].each do |entity|
+JSON.parse(File.read("data/score_data.json"), symbolize_names: true)[:entities][3..].each do |entity|
   next if entity[:data][:values].length > 5
   notes << entity
 end
