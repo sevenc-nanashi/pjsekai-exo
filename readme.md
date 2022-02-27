@@ -2,7 +2,7 @@
 pjsekai-exo とは、UI がないプレイ動画にプロセカ風の UI を付けた exo ファイルを生成するツールです。
 
 ## 必須事項
-- [Ruby 3.0 以上](https://www.ruby-lang.org/ja/documentation/installation/)
+- [Ruby 3.0 以上(with DevKit)](https://www.ruby-lang.org/ja/documentation/installation/)
 - [AviUtl](http://spring-fragrance.mints.ne.jp/aviutl/) + [拡張編集プラグイン](http://spring-fragrance.mints.ne.jp/aviutl/) （[導入方法](https://aviutl.info/dl-innsuto-ru/)）
 
 ## 動画の作り方
