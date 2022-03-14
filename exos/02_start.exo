@@ -7,7 +7,7 @@ length=179
 audio_rate=44100
 audio_ch=2
 alpha=1
-name=Å‰‚Ì‚ ‚ê
+name=î•ñ•\¦
 [0]
 start=1
 end=179
@@ -278,7 +278,7 @@ _name=•W€•`‰æ
 X=0.0
 Y=-85.0
 Z=0.0
-Šg‘å—¦=36.00
+Šg‘å—¦=!!scale!!
 “§–¾“x=0.0
 ‰ñ“]=0.00
 blend=0
