@@ -12,6 +12,8 @@ require_relative "console"
 # .pedファイルを生成するモジュール。
 #
 class PEDWizard
+  VERSION = "0.0.1"
+
   def start
     logo
     level_data
@@ -28,6 +30,7 @@ class PEDWizard
     puts <<~LOGO
            #{color_escape 0x00bbd0}== pjsekai-exo ----------------------------------------------------------------\e[m
              pjsekai-exo - プロセカ風exoファイルジェネレーター
+             Version: #{VERSION}
              Developed by #{color_escape 0x48b0d5}名無し｡(@sevenc-nanashi)\e[m
 
              https://github.com/sevenc-nanashi/pjsekai-exo

@@ -2,7 +2,7 @@
 
 desc "ocraでスクリプトをビルドします。"
 task :build do
-  sh "ocra --gem-all --output pjsekai-exo.exe main.rb"
+  sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb"
 end
 
 desc "rubocopでLintします。"
@@ -13,4 +13,10 @@ end
 desc "rubocopのエラーを修正します。"
 task "lint:fix" do
   sh "rubocop *.rb -A"
+end
+
+desc "Gitのタグをつけます。"
+task :tag do
+  require_relative "main"
+  sh "git tag #{PEDWizard::VERSION} -f"
 end
