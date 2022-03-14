@@ -1,6 +1,6 @@
 # プロセカ風exoファイルジェネレーター
-![dark](https://user-images.githubusercontent.com/92153597/158165792-96244bd8-c553-4473-adcc-9efb0c5a71c8.png#gh-dark-mode-only)
-![light](https://user-images.githubusercontent.com/92153597/158165798-5b1593ea-1ca4-4282-8529-4eee578a33ce.png#gh-light-mode-only)
+![dark](https://user-images.githubusercontent.com/92153597/158165792-96244bd8-c553-4473-adcc-9efb0c5a71c8.png##gh-light-mode-only)
+![light](https://user-images.githubusercontent.com/92153597/158165798-5b1593ea-1ca4-4282-8529-4eee578a33ce.png#gh-dark-mode-only)
 
 pjsekai-exo とは、UI がないプレイ動画にプロセカ風の UI を付けた exo ファイルを生成するツールです。
 
