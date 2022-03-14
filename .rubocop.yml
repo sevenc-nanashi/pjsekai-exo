@@ -72,3 +72,6 @@ Layout/EndOfLine: # For git
 
 Lint/ScriptPermission: # For GitHub Actions
   Enabled: false
+
+Style/Documentation: # For editor
+  Enabled: false

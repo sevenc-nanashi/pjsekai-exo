@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PEDWizard
   SOF_SECOND_BYTE = 0xc0..0xcf
 

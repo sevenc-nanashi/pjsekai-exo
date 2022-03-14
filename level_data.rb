@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require "http"
 require "json"
 require "stringio"
 require "zlib"
@@ -16,7 +15,7 @@ class PEDWizard
       q.validate(/[A-Za-z0-9]{12}/, "譜面IDのフォーマットに沿っていません。")
     end
 
-    get = HTTP.get("https://servers.purplepalette.net/levels/#{@chart_id}")
+    get = http_get("https://servers.purplepalette.net/levels/#{@chart_id}")
     if get.code != 200
       CPuts.error "譜面が見つかりませんでした。"
       exit 1
@@ -25,7 +24,7 @@ class PEDWizard
     chart_data = JSON.parse(get.body.to_s, symbolize_names: true)
     CPuts.info "譜面名：\e[m#{chart_data[:item][:title]}"
     CPuts.info "譜面作者：\e[m#{chart_data[:item][:author]}"
-    data = HTTP.get("https://servers.purplepalette.net" + chart_data[:item][:data][:url])
+    data = http_get("https://servers.purplepalette.net" + chart_data[:item][:data][:url])
     stream = StringIO.new(data.body.to_s)
 
     Zlib::GzipReader.wrap(stream) do |gz|

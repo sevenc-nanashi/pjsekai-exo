@@ -2,7 +2,6 @@
 require "digest"
 require "json"
 require "tty-prompt"
-require "http"
 require_relative "console"
 
 class PEDWizard
@@ -61,7 +60,7 @@ class PEDWizard
     print "\e[90m背景画像をダウンロードしています...\e[m"
     File.write(
       "./dist/#{@chart_id}/background.png",
-      HTTP.get("https://image-gen.sevenc7c.com/generate/#{@chart_id}.png").body.to_s,
+      http_get("https://image-gen.sevenc7c.com/generate/#{@chart_id}.png").body.to_s,
       mode: "wb",
     )
     puts "\e[92m 完了\e[m"
@@ -71,12 +70,12 @@ class PEDWizard
   def download_jacket
     print "\e[90mジャケットをダウンロードしています...\e[m"
     data = JSON.parse(
-      HTTP.get("https://servers.purplepalette.net/levels/#{@chart_id}").body,
+      http_get("https://servers.purplepalette.net/levels/#{@chart_id}").body,
       symbolize_names: true,
     )
     File.write(
       "./dist/#{@chart_id}/jacket.png",
-      HTTP.get("https://servers.purplepalette.net" + data[:item][:cover][:url]).body.to_s,
+      http_get("https://servers.purplepalette.net" + data[:item][:cover][:url]).body.to_s,
       mode: "wb",
     )
     puts "\e[92m 完了\e[m"

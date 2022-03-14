@@ -69,3 +69,4 @@ score_data.json
 data/*
 !data/.gitkeep
 *.ped
+*.exe
