@@ -7,7 +7,7 @@ require_relative "console"
 class PEDWizard
   def configure
     prompt = TTY::Prompt.new
-    exos = Dir.glob("./exos/*.exo")
+    exos = Dir.glob(__dir__ + "/exos/*.exo")
 
     answers = {
       background: "",
@@ -35,7 +35,7 @@ class PEDWizard
       answers.each do |key, value|
         contents.gsub!("!!#{key}!!", process_path(value))
       end
-      File.write(exo.sub("exos", "dist/#{@chart_id}"), contents, encoding: Encoding::SJIS)
+      File.write("./dist/#{@chart_id}/" + File.basename(exo), contents, encoding: Encoding::SJIS)
     end
 
     content = File.read("./dist/#{@chart_id}/data.tmp.ped")

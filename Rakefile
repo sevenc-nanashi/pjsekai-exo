@@ -2,7 +2,7 @@
 
 desc "ocraでスクリプトをビルドします。"
 task :build do
-  sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb"
+  sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb exos/*"
 end
 
 desc "rubocopでLintします。"
