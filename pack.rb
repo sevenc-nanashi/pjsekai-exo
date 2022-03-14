@@ -30,6 +30,7 @@ ranks = { "c" => 21500, "b" => 434000, "a" => 940000, "s" => 1165000 }
 
 File.open("./data/base.txt", "w") do |file|
   file.puts "p|!!assets!!"
+  file.puts "a|!!ap!!"
   scores.each_with_index do |score, i|
     file.write "s|#{score[0]}:#{score[1]}:"
     file.write "#{score[2]}:"

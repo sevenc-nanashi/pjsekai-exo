@@ -137,7 +137,8 @@ local header
 local data
 local combo
 local mcombo
-local set
+local ap
+local ap_alpha
 score = 0
 fp = io.open(file, "r")
 obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
@@ -164,34 +165,56 @@ for line in fp:lines() do
             -- debug_print((tonumber(time) * obj.framerate))
         elseif header == "p" then
             path = data
+        elseif header == "a" then
+            ap = data == "true"
         end
     end
 end
 io.close(fp)
+ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1.25 / 2)
+if ap_alpha > 1 then
+    ap_alpha = 1
+end
 if combo > 0 then
-    obj.load("image", path.."\\combo.png")
-    obj.draw(0, 0)
+    if ap then
+        obj.load("image", path.."\\combo\\b_c.png")
+        obj.draw(474, -132, 0, 0.7, ap_alpha)
+        obj.load("image", path.."\\combo\\p_c.png")
+    else
+        obj.load("image", path.."\\combo\\n_c.png")
+    end
+    obj.draw(474, -132, 0, 0.7)
     obj.copybuffer("cache:combo", "tmp")
     obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
     local combo_str
     local alpha
+    fax = 0.678321678321678
     combo_str = tostring(combo)
     for i = 1, #combo_str do
         digit = combo_str:sub(i, i)
         shift = -(#combo_str / 2) + i - 0.5
-        obj.load("image", path.."\\combos\\"..digit..".png")
         progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 8)
         if progress > 1 then
             alpha = 0.2 - (progress - 1) * 0.2
         else
             alpha = 0.2
         end
-        obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, 0.5 + 0.5 * progress, alpha)
+        if ap then
+            obj.load("image", path.."\\combo\\p_"..digit..".png")
+        else
+            obj.load("image", path.."\\combo\\n_"..digit..".png")
+        end
+        obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, alpha)
         if progress > 1 then
             progress = 1
         end
         -- debug_print(shift)
-        obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, 0.5 + 0.5 * progress)
+        if ap then
+            obj.load("image", path.."\\combo\\b_"..digit..".png")
+            obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, ap_alpha)
+            obj.load("image", path.."\\combo\\p_"..digit..".png")
+        end
+        obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax)
     end
     obj.copybuffer("cache:combo_num", "tmp")
     obj.copybuffer("obj", "cache:combo")

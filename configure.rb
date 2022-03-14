@@ -13,6 +13,7 @@ answers = {
   assets: "",
   movie: "",
   data: File.expand_path("./#{CHART_ID}.ped").gsub("/", "\\\\\\\\"),
+  ap: true,
 }
 puts "\e[93mファイルの設定を行います。パスを入力して下さい。\e[m"
 puts "\e[90mパスの両端の\"は取り除かれます。\e[m"
@@ -58,6 +59,7 @@ answers[:assets] = prompt.ask("assetsフォルダ（省略でこのフォルダ�
 answers[:movie] = prompt.ask("プレイ動画:") do |q|
   q.validate ->(value) { File.exist?(process_path(value)) }, "プレイ動画が見付かりません。"
 end
+answers[:ap] = prompt.yes?("AP時のコンボ表示にしますか？").to_s
 
 exos.each do |exo|
   contents = File.read(exo, encoding: Encoding::SJIS)
