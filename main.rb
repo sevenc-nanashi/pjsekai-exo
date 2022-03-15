@@ -29,11 +29,11 @@ class PEDWizard
   def logo
     puts <<~LOGO
            #{color_escape 0x00bbd0}== pjsekai-exo ----------------------------------------------------------------\e[m
-             pjsekai-exo - プロセカ風exoファイルジェネレーター
-             Version: #{VERSION}
+             #{color_escape 0x00afc7}pjsekai-exo / プロセカ風動画作成補助ツール\e[m
+             Version: #{color_escape 0x0f6ea3}#{VERSION}\e[m
              Developed by #{color_escape 0x48b0d5}名無し｡(@sevenc-nanashi)\e[m
 
-             https://github.com/sevenc-nanashi/pjsekai-exo
+                https://github.com/sevenc-nanashi/pjsekai-exo
            #{color_escape 0xff5a91}-------------------------------------------------------------------------------\e[m
            
          LOGO
