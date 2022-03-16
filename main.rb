@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "io/console"
 require_relative "level_data"
 require_relative "calc_score"
 require_relative "pack"
@@ -24,6 +25,10 @@ class PEDWizard
   rescue Interrupt
     puts
     CPuts.error "中断しました。"
+  ensure
+    puts
+    CPuts.ask "何かキーを押してください。"
+    $stdin.getch
   end
 
   def logo
