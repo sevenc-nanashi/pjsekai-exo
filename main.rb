@@ -25,6 +25,9 @@ class PEDWizard
   rescue Interrupt
     puts
     CPuts.error "中断しました。"
+  rescue StandardError => e
+    CPuts.error "エラーが発生しました。"
+    CPuts.error e.full_message
   ensure
     puts
     CPuts.ask "何かキーを押してください。"
