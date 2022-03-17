@@ -30,8 +30,8 @@ task :pack do
   FileUtils.mv("./replaced.tmp.obj", "pack/#{name}/@プロセカ.obj")
   FileUtils.cp_r("assets/.", "pack/#{name}/assets/.")
   Rake::Task["build"].invoke
-  FileUtils.mv("pjsekai-exo.exe", "pack/#{name}/pjsekai-exo.exe")
-  sh "tar -czf #{name}.zip -C pack ."
+  FileUtils.cp("pjsekai-exo.exe", "pack/#{name}/pjsekai-exo.exe")
+  sh "tar -czf #{name}.zip -C pack #{name}"
   puts "#{name}.zipを作成しました。"
 end
 
