@@ -3,7 +3,7 @@
 ![](https://user-images.githubusercontent.com/92153597/158166653-41b193c0-7f7e-4efd-b82e-cec338a68562.png#gh-light-mode-only)
 
 
-pjsekai-exo とは、UI がないプレイ動画にプロセカ風の UI を付けた exo ファイルを生成するツールです。
+pjsekai-exoは、プロセカの創作譜面をプロセカ風の動画にするためのオープンソースのツールです。
 
 ## 必須事項
 - [Ruby 3.0 以上(with DevKit)](https://www.ruby-lang.org/ja/documentation/installation/)
@@ -29,7 +29,7 @@ pjsekai-exo とは、UI がないプレイ動画にプロセカ風の UI を付�
 1. 右のReleasesから最新のバージョンをダウンロードする
 2. `pjsekai-exo.exe` を実行し、関係する情報を入力する
 3. dist/譜面ID にある exo ファイルをファイル名の数字に対応したシーンで読み込む（例：`00_root.exo`はRootで、`01_main.exo`はシーン1で）
-4.  `@main.obj` ファイルをAviUtlのディレクトリの`/Plugins/script`に`@プロセカ.obj`としてコピーする
+4.  `@プロセカ.obj` ファイルをAviUtlのディレクトリの`/Plugins/script`にコピーする（ファイル名は変えずに）
 5.  シーンを設定する（下を参照）
 
 ## シーンの対応
