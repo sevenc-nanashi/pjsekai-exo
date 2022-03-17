@@ -70,3 +70,6 @@ data/*
 !data/.gitkeep
 *.ped
 *.exe
+pack
+*.zip
+*.hash

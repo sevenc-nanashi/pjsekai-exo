@@ -4,7 +4,7 @@ require "json"
 require "tty-prompt"
 require_relative "console"
 
-class PEDWizard
+class PSExo
   def configure
     prompt = TTY::Prompt.new
     exos = Dir.glob(__dir__ + "/exos/*.exo")

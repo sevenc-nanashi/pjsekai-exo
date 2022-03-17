@@ -18,7 +18,7 @@ def note_fax(type)
   end
 end
 
-class PEDWizard
+class PSExo
   def calc_score
     prompt = TTY::Prompt.new
     CPuts.info "スコアを計算します。"

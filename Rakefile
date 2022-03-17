@@ -2,7 +2,37 @@
 
 desc "ocraでスクリプトをビルドします。"
 task :build do
-  sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb exos/*"
+  require "digest"
+
+  hashes = [
+    *Dir.glob("*.rb"),
+    *Dir.glob("exos/*.exo"),
+  ].map do |file|
+    Digest::SHA256.file(file).hexdigest
+  end
+  hash = hashes.sort.join("\n")
+  if File.exist?("build.hash") && File.read("build.hash") == hash && File.exist?("pjsekai-exo.exe")
+    puts "ハッシュが変更されていません。無視します。"
+  else
+    sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb exos/*"
+    File.write("build.hash", hash)
+  end
+end
+
+desc "zipを作ります。"
+task :pack do
+  require "fileutils"
+  require_relative "main"
+
+  name = "pjsekai-exo@#{PSExo::VERSION}"
+  FileUtils.mkdir_p("pack/#{name}") unless Dir.exist?("pack/#{name}")
+  PSExo.new.replace_version
+  FileUtils.mv("./replaced.tmp.obj", "pack/#{name}/@プロセカ.obj")
+  FileUtils.cp_r("assets/.", "pack/#{name}/assets/.")
+  Rake::Task["build"].invoke
+  FileUtils.mv("pjsekai-exo.exe", "pack/#{name}/pjsekai-exo.exe")
+  sh "tar -czf #{name}.zip -C pack ."
+  puts "#{name}.zipを作成しました。"
 end
 
 desc "rubocopでLintします。"
@@ -18,5 +48,5 @@ end
 desc "Gitのタグをつけます。"
 task :tag do
   require_relative "main"
-  sh "git tag #{PEDWizard::VERSION} -f"
+  sh "git tag #{PSExo::VERSION} -f"
 end

@@ -3,7 +3,7 @@ require "json"
 
 RANKS = { "c" => 21_500, "b" => 434_000, "a" => 940_000, "s" => 1_165_000 }.freeze
 
-class PEDWizard
+class PSExo
   def pack
     scores = File.read("./dist/#{@chart_id}/score.json")
       .then { JSON.parse(_1, symbolize_names: true) }
@@ -14,6 +14,7 @@ class PEDWizard
     File.open("./dist/#{@chart_id}/data.tmp.ped", "w") do |file|
       file.puts "p|!!assets!!"
       file.puts "a|!!ap!!"
+      file.puts "v|#{PSExo::VERSION}"
       scores.each_with_index do |score, _i|
         file.write "s|#{score[0]}:#{score[1]}:"
         file.write "#{score[2]}:"

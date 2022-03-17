@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "net/https"
 
-class PEDWizard
+class PSExo
   Response = Struct.new(:code, :body)
 
   def http_get(url)

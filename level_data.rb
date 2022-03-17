@@ -6,7 +6,7 @@ require "fileutils"
 require "tty-prompt"
 require_relative "console"
 
-class PEDWizard
+class PSExo
   def level_data
     prompt = TTY::Prompt.new
     CPuts.info "譜面の情報を取得します。"

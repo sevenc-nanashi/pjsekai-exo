@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PEDWizard
+class PSExo
   SOF_SECOND_BYTE = 0xc0..0xcf
 
   def calc_scale(path)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "fileutils"
 
-class PEDWizard
+class PSExo
   def cleanup
     FileUtils.rm_rf("./dist/#{@chart_id}/chart_data.json")
     FileUtils.rm_rf("./dist/#{@chart_id}/score.json")

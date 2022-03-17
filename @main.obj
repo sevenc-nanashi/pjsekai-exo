@@ -5,8 +5,6 @@ local fp
 local time
 local score
 local add
--- local add_time
--- local ladd_time
 local path
 local header
 local data
@@ -15,10 +13,10 @@ local rank
 local match
 local nmatch
 local set
+local version_status
 score = 0
 fp = io.open(file, "r")
 obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
--- debug_print((obj.frame + obj.track0))
 time = 0
 score = 0
 add = 0
@@ -26,107 +24,111 @@ width = 1
 rank = "n"
 set = false
 match = {0, 0, 0, 0, "n"}
+version_status = "none"
 for line in fp:lines() do
 	header, data = string.match(line, "([a-z]+)|(.+)")
     if header ~= nil then
-        -- debug_print((tonumber(time) * obj.framerate))
-        -- debug_print((obj.frame + obj.track0))
-        -- debug_print(tostring((tonumber(time) * obj.framerate) < (obj.frame + obj.track0)))
         if header == "s" then
             nmatch = {string.match(data, "([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([%-0-9.]+):([nabcs]+)")}
-            -- debug_print((tonumber(nmatch[1]) * obj.framerate))
-            -- debug_print((obj.frame - obj.track0))
             if (tonumber(nmatch[1]) * obj.framerate) > (obj.frame - obj.track0) then
                 set = true
                 time, score, add, width, rank = tonumber(match[1]), tonumber(match[2]), tonumber(match[3]), tonumber(match[4]), match[5]
                 break
             end
             match = nmatch
-            -- debug_print(tonumber(match))
-            -- debug_print((tonumber(time) * obj.framerate))
-        elseif header == "p" then
+        elseif header == "p" then -- パス
             path = data
+        elseif header == "v" then -- バージョン
+            if data == "{{version}}" or "{{version}}" == "{{vers".."ion}}" then
+                version_status = "ok"
+            else
+                obj.setfont("メイリオ", 32)
+                obj.load("text","pedファイルとのバージョンが違います！\nオブジェクトファイルは{{version}}、pedファイルは"..data.."です。")
+                version_status = "unmatch"
+            end
         end
     end
+end
+if version_status == "none" then
+    obj.setfont("メイリオ", 32)
+    obj.load("text","pedファイルのバージョンが設定されていません。")
 end
 io.close(fp)
-if set == false then
-    time, score, add, width, rank = tonumber(nmatch[1]), tonumber(nmatch[2]), tonumber(nmatch[3]), tonumber(nmatch[4]), nmatch[5]
-end
-obj.load("image", path.."\\score\\score.png")
-obj.draw(-387, -317, 0, 0.7)
-obj.copybuffer("cache:score", "tmp")
-obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-obj.load("image", path.."\\score\\bars.png")
-obj.draw(-387, -317, 0, 0.7)
-if rank ~= "n" then
-    obj.load("image", path.."\\score\\"..rank..".png")
-    obj.draw(-607, -317, 0, 0.7)
-end
-obj.copybuffer("cache:score_bar", "tmp")
-obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-obj.load("image", path.."\\score\\inner.png")
-obj.draw(-387, -317, 0, 0.7)
--- 389
-obj.setoption("blend", "alpha_sub")
-obj.load("figure", "四角形")
-obj.drawpoly(
-    -387 - 185 + 427 * width, -350, 0,
-    -387 + 242, -350, 0,
-    -387 + 242, -300, 0,
-    -387 - 185 + 427 * width, -300, 0)
-obj.setoption("blend", 0)
-obj.copybuffer("cache:score_bar_inner", "tmp")
-obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-
-local score_str
-score_str = "nnnnnnnn"..tostring(score)
-if score == 0 then
-    score_str = "nnnnnnnn"
-end
-local digit
-for c = -8, -1 do
-    digit = score_str:sub(c, c)
-    obj.load("image", path.."\\score\\"..digit..".png")
-    obj.draw(-559 + 24 * (8 + c), -297, 0)
-end
-obj.copybuffer("cache:digit", "tmp")
-obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
--- obj.setoption("blend", 0)
-
-local add_str
-local offset
-local progress
-
-if add > 0 and ((obj.frame - obj.track0) - (time * obj.framerate)) < 60 then
-    add_str = "p"..tostring(add)
-    for c = 1, #add_str do
-        digit = add_str:sub(c, c)
-        progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 8)
-        if progress > 1 then
-            progress = 1
-        end
-        offset = progress * 50
-        obj.load("image", path.."\\score\\"..digit..".png")
-        -- debug_print(progress)
-        obj.draw(-429 + 16 * c + offset, -292, 0, 0.65, progress * 0.7 + 0.3)
+if version_status == "ok" then
+    if set == false then
+        time, score, add, width, rank = tonumber(nmatch[1]), tonumber(nmatch[2]), tonumber(nmatch[3]), tonumber(nmatch[4]), nmatch[5]
     end
+    obj.load("image", path.."\\score\\score.png")
+    obj.draw(-387, -317, 0, 0.7)
+    obj.copybuffer("cache:score", "tmp")
+    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+    obj.load("image", path.."\\score\\bars.png")
+    obj.draw(-387, -317, 0, 0.7)
+    if rank ~= "n" then
+        obj.load("image", path.."\\score\\"..rank..".png")
+        obj.draw(-607, -317, 0, 0.7)
+    end
+    obj.copybuffer("cache:score_bar", "tmp")
+    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+    obj.load("image", path.."\\score\\inner.png")
+    obj.draw(-387, -317, 0, 0.7)
+    obj.setoption("blend", "alpha_sub")
+    obj.load("figure", "四角形")
+    obj.drawpoly(
+        -387 - 185 + 427 * width, -350, 0,
+        -387 + 242, -350, 0,
+        -387 + 242, -300, 0,
+        -387 - 185 + 427 * width, -300, 0)
+    obj.setoption("blend", 0)
+    obj.copybuffer("cache:score_bar_inner", "tmp")
+    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+
+    local score_str
+    score_str = "nnnnnnnn"..tostring(score)
+    if score == 0 then
+        score_str = "nnnnnnnn"
+    end
+    local digit
+    for c = -8, -1 do
+        digit = score_str:sub(c, c)
+        obj.load("image", path.."\\score\\"..digit..".png")
+        obj.draw(-559 + 24 * (8 + c), -297, 0)
+    end
+    obj.copybuffer("cache:digit", "tmp")
+    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+
+    local add_str
+    local offset
+    local progress
+
+    if add > 0 and ((obj.frame - obj.track0) - (time * obj.framerate)) < 60 then
+        add_str = "p"..tostring(add)
+        for c = 1, #add_str do
+            digit = add_str:sub(c, c)
+            progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 8)
+            if progress > 1 then
+                progress = 1
+            end
+            offset = progress * 50
+            obj.load("image", path.."\\score\\"..digit..".png")
+            obj.draw(-429 + 16 * c + offset, -292, 0, 0.65, progress * 0.7 + 0.3)
+        end
+    end
+    obj.copybuffer("cache:add", "tmp")
+    obj.copybuffer("obj", "cache:score")
+    obj.draw()
+    obj.copybuffer("obj", "cache:add")
+    obj.draw()
+    obj.copybuffer("obj", "cache:score_bar_inner")
+    obj.draw()
+    obj.copybuffer("obj", "cache:score_bar")
+    obj.draw()
+    obj.copybuffer("obj", "cache:digit")
+    obj.draw()
+
+
+    obj.copybuffer("obj", "tmp")
 end
-obj.copybuffer("cache:add", "tmp")
-obj.copybuffer("obj", "cache:score")
-obj.draw()
-obj.copybuffer("obj", "cache:add")
-obj.draw()
-obj.copybuffer("obj", "cache:score_bar_inner")
-obj.draw()
-obj.copybuffer("obj", "cache:score_bar")
-obj.draw()
-obj.copybuffer("obj", "cache:digit")
-obj.draw()
-
-
-obj.copybuffer("obj", "tmp")
-
 @コンボ
 --file:
 --track0:オフセット,-10000,10000,0,1
@@ -139,93 +141,99 @@ local combo
 local mcombo
 local ap
 local ap_alpha
+local version_status
 score = 0
 fp = io.open(file, "r")
 obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
--- debug_print((obj.frame + obj.track0))
 time = 0
 combo = 0
+version_status = "none"
 for line in fp:lines() do
 	header, data = string.match(line, "([a-z]+)|(.+)")
     if header ~= nil then
-        -- debug_print((tonumber(time) * obj.framerate))
-        -- debug_print((obj.frame + obj.track0))
-        -- debug_print(tostring((tonumber(time) * obj.framerate) < (obj.frame + obj.track0)))
         if header == "s" then
             mtime, mcombo = string.match(data, "([%-0-9.]+):[%-0-9.]+:[%-0-9.]+:[%-0-9.]+:[nabcs]+:([%-0-9.]+)")
-            -- debug_print((tonumber(nmatch[1]) * obj.framerate))
-            -- debug_print((obj.frame - obj.track0))
             if (tonumber(mtime) * obj.framerate) > (obj.frame - obj.track0) then
                 break
             end
             combo = tonumber(mcombo)
             time = tonumber(mtime)
 
-            -- debug_print(tonumber(match))
-            -- debug_print((tonumber(time) * obj.framerate))
         elseif header == "p" then
             path = data
         elseif header == "a" then
             ap = data == "true"
+        elseif header == "v" then -- バージョン
+            if data == "{{version}}" or "{{version}}" == "{{vers".."ion}}" then
+                version_status = "ok"
+            else
+                obj.setfont("メイリオ", 32)
+                obj.load("text","pedファイルとのバージョンが違います！\nオブジェクトファイルは{{version}}、pedファイルは"..data.."です。")
+                version_status = "unmatch"
+            end
         end
     end
+end
+if version_status == "none" then
+    obj.setfont("メイリオ", 32)
+    obj.load("text","pedファイルのバージョンが設定されていません。")
 end
 io.close(fp)
-ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1.25 / 2)
-if ap_alpha > 1 then
-    ap_alpha = 1
-end
-if combo > 0 then
-    if ap then
-        obj.load("image", path.."\\combo\\b_c.png")
-        obj.draw(474, -132, 0, 0.7, ap_alpha)
-        obj.load("image", path.."\\combo\\p_c.png")
-    else
-        obj.load("image", path.."\\combo\\n_c.png")
+if version_status == "ok" then
+    ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1.25 / 2)
+    if ap_alpha > 1 then
+        ap_alpha = 1
     end
-    obj.draw(474, -132, 0, 0.7)
-    obj.copybuffer("cache:combo", "tmp")
-    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-    local combo_str
-    local alpha
-    fax = 0.678321678321678
-    combo_str = tostring(combo)
-    for i = 1, #combo_str do
-        digit = combo_str:sub(i, i)
-        shift = -(#combo_str / 2) + i - 0.5
-        progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 8)
-        if progress > 1 then
-            alpha = 0.2 - (progress - 1) * 0.2
-        else
-            alpha = 0.2
-        end
+    if combo > 0 then
         if ap then
-            obj.load("image", path.."\\combo\\p_"..digit..".png")
+            obj.load("image", path.."\\combo\\b_c.png")
+            obj.draw(474, -132, 0, 0.7, ap_alpha)
+            obj.load("image", path.."\\combo\\p_c.png")
         else
-            obj.load("image", path.."\\combo\\n_"..digit..".png")
+            obj.load("image", path.."\\combo\\n_c.png")
         end
-        obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, alpha)
-        if progress > 1 then
-            progress = 1
+        obj.draw(474, -132, 0, 0.7)
+        obj.copybuffer("cache:combo", "tmp")
+        obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+        local combo_str
+        local alpha
+        fax = 0.678321678321678
+        combo_str = tostring(combo)
+        for i = 1, #combo_str do
+            digit = combo_str:sub(i, i)
+            shift = -(#combo_str / 2) + i - 0.5
+            progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 8)
+            if progress > 1 then
+                alpha = 0.2 - (progress - 1) * 0.2
+            else
+                alpha = 0.2
+            end
+            if ap then
+                obj.load("image", path.."\\combo\\p_"..digit..".png")
+            else
+                obj.load("image", path.."\\combo\\n_"..digit..".png")
+            end
+            obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, alpha)
+            if progress > 1 then
+                progress = 1
+            end
+            if ap then
+                obj.load("image", path.."\\combo\\b_"..digit..".png")
+                obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, ap_alpha)
+                obj.load("image", path.."\\combo\\p_"..digit..".png")
+            end
+            obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax)
         end
-        -- debug_print(shift)
-        if ap then
-            obj.load("image", path.."\\combo\\b_"..digit..".png")
-            obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, ap_alpha)
-            obj.load("image", path.."\\combo\\p_"..digit..".png")
-        end
-        obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax)
+        obj.copybuffer("cache:combo_num", "tmp")
+        obj.copybuffer("obj", "cache:combo")
+        obj.draw()
+        obj.copybuffer("obj", "cache:combo_num")
+        obj.draw()
     end
-    obj.copybuffer("cache:combo_num", "tmp")
-    obj.copybuffer("obj", "cache:combo")
-    obj.draw()
-    obj.copybuffer("obj", "cache:combo_num")
-    obj.draw()
+
+    obj.copybuffer("obj", "tmp")
+
 end
-
-obj.copybuffer("obj", "tmp")
-
-
 @判定
 --file:
 --track0:オフセット,-10000,10000,0,1
@@ -235,54 +243,62 @@ local mtime
 local header
 local data
 local combo
+local version_status
 score = 0
+version_status = "none"
 fp = io.open(file, "r")
 obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
--- debug_print((obj.frame + obj.track0))
 time = 0
 combo = 0
 for line in fp:lines() do
 	header, data = string.match(line, "([a-z]+)|(.+)")
     if header ~= nil then
-        -- debug_print((tonumber(time) * obj.framerate))
-        -- debug_print((obj.frame + obj.track0))
-        -- debug_print(tostring((tonumber(time) * obj.framerate) < (obj.frame + obj.track0)))
         if header == "s" then
             mtime = string.match(data, "([%-0-9.]+):[%-0-9.]+:[%-0-9.]+:[%-0-9.]+:[nabcs]+:[%-0-9.]+")
-            -- debug_print((tonumber(nmatch[1]) * obj.framerate))
-            -- debug_print((obj.frame - obj.track0))
             if (tonumber(mtime) * obj.framerate) > (obj.frame - obj.track0) then
                 break
             end
             time = tonumber(mtime)
 
-            -- debug_print(tonumber(match))
-            -- debug_print((tonumber(time) * obj.framerate))
         elseif header == "p" then
             path = data
+        elseif header == "v" then -- バージョン
+            if data == "{{version}}" or "{{version}}" == "{{vers".."ion}}" then
+                version_status = "ok"
+            else
+                obj.setfont("メイリオ", 32)
+                obj.load("text","pedファイルとのバージョンが違います！\nオブジェクトファイルは{{version}}、pedファイルは"..data.."です。")
+                version_status = "unmatch"
+            end
         end
     end
 end
-io.close(fp)
-if time > 0 then
-    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-    local combo_str
-    local alpha
-    combo_str = tostring(combo)
-    for i = 1, #combo_str do
-        digit = combo_str:sub(i, i)
-        shift = -(#combo_str / 2) + i - 0.5
-        obj.load("image", path.."\\perfect.png")
-        progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 4)
-        if progress < 1 then
-            obj.draw(0, 90, 0, 0.3 + 0.4 * progress, progress)
-        elseif progress < 5 then
-            obj.draw(0, 90, 0, 0.7, 1)
-        end
-    end
-    obj.copybuffer("cache:perfect", "tmp")
-    obj.copybuffer("obj", "cache:perfect")
-    obj.draw()
+if version_status == "none" then
+    obj.setfont("メイリオ", 32)
+    obj.load("text","pedファイルのバージョンが設定されていません。")
 end
+if version_status == "ok" then
+    io.close(fp)
+    if time > 0 then
+        obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+        local combo_str
+        local alpha
+        combo_str = tostring(combo)
+        for i = 1, #combo_str do
+            digit = combo_str:sub(i, i)
+            shift = -(#combo_str / 2) + i - 0.5
+            obj.load("image", path.."\\perfect.png")
+            progress = (((obj.frame - obj.track0) - (time * obj.framerate)) / 4)
+            if progress < 1 then
+                obj.draw(0, 90, 0, 0.3 + 0.4 * progress, progress)
+            elseif progress < 5 then
+                obj.draw(0, 90, 0, 0.7, 1)
+            end
+        end
+        obj.copybuffer("cache:perfect", "tmp")
+        obj.copybuffer("obj", "cache:perfect")
+        obj.draw()
+    end
 
-obj.copybuffer("obj", "tmp")
+    obj.copybuffer("obj", "tmp")
+end

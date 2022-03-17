@@ -12,7 +12,7 @@ require_relative "console"
 #
 # .pedファイルを生成するモジュール。
 #
-class PEDWizard
+class PSExo
   VERSION = "0.0.1"
 
   def start
@@ -51,6 +51,13 @@ class PEDWizard
     _, red, green, blue = [hex].pack("L").unpack("C*").reverse
     "\e[38;2;#{red};#{green};#{blue}m"
   end
+
+  def replace_version
+    File.read("./@main.obj", encoding: "shift_jis").then do |data|
+      data.gsub!("{{version}}", VERSION)
+      File.write("./replaced.tmp.obj", data, encoding: "shift_jis")
+    end
+  end
 end
 
-PEDWizard.new.start if (__FILE__ == $PROGRAM_NAME) && !defined? Ocra
+PSExo.new.start if (__FILE__ == $PROGRAM_NAME) && !defined? Ocra
