@@ -29,6 +29,7 @@ task :pack do
   PSExo.new.replace_version
   FileUtils.mv("./replaced.tmp.obj", "pack/#{name}/@プロセカ.obj")
   FileUtils.cp_r("assets/.", "pack/#{name}/assets/.")
+  FileUtils.cp_r("zip_readme.txt", "pack/#{name}/README.txt")
   Rake::Task["build"].invoke
   FileUtils.cp("pjsekai-exo.exe", "pack/#{name}/pjsekai-exo.exe")
   sh "tar -czf #{name}.zip -C pack #{name}"
