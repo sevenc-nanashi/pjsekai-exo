@@ -6,6 +6,6 @@ class PSExo
     FileUtils.rm_rf("./dist/#{@chart_id}/chart_data.json")
     FileUtils.rm_rf("./dist/#{@chart_id}/score.json")
     FileUtils.rm_rf("./dist/#{@chart_id}/data.tmp.ped")
-    CPuts.success "生成途中のファイルを削除しました。"
+    CPuts.success "一時ファイルを削除しました。"
   end
 end
