@@ -31,11 +31,11 @@ class PSExo
     answers[:scale] = calc_scale(answers[:jacket]).to_s
 
     exos.each do |exo|
-      contents = File.read(exo, encoding: Encoding::SJIS)
+      contents = File.read(exo, encoding: Encoding::SJIS).encode(Encoding::UTF_8)
       answers.each do |key, value|
         contents.gsub!("!!#{key}!!", process_path(value))
       end
-      File.write("./dist/#{@chart_id}/" + File.basename(exo), contents, encoding: Encoding::SJIS)
+      File.write("./dist/#{@chart_id}/" + File.basename(exo), contents, encoding: Encoding::SJIS, errors: :replace)
     end
 
     content = File.read("./dist/#{@chart_id}/data.tmp.ped")
@@ -53,7 +53,7 @@ class PSExo
       .gsub("\\", "\\\\\\\\")
       .gsub(/^"|"$/, "")
       .gsub(/\\$/, "")
-      .encode("SHIFT_JIS")
+      .encode(Encoding::UTF_8)
   end
 
   def download_background
