@@ -32,7 +32,8 @@ task :pack do
   FileUtils.cp_r("zip_readme.txt", "pack/#{name}/README.txt")
   Rake::Task["build"].invoke
   FileUtils.cp("pjsekai-exo.exe", "pack/#{name}/pjsekai-exo.exe")
-  sh "tar -czf #{name}.zip -C pack #{name}"
+  FileUtils.rm("#{name}.zip") if File.exist?("#{name}.zip")
+  sh %{powershell -NoProfile -NoLogo -command "& { Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::CreateFromDirectory('pack/#{name}', './#{name}.zip'); }"}
   puts "#{name}.zipを作成しました。"
 end
 
