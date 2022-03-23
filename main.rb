@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require "io/console"
+require_relative "install_object"
 require_relative "level_data"
 require_relative "calc_score"
 require_relative "pack"
@@ -17,6 +18,7 @@ class PSExo
 
   def start
     logo
+    install_object
     level_data
     calc_score
     pack
@@ -27,7 +29,7 @@ class PSExo
     CPuts.error "中断しました。"
   rescue StandardError => e
     CPuts.error "エラーが発生しました。"
-    CPuts.error e.full_message
+    warn e.full_message
   ensure
     puts
     CPuts.ask "何かキーを押してください。"
