@@ -12,6 +12,7 @@ class PSExo
       .reverse.uniq { |s| s[0] }.reverse
 
     File.open("./dist/#{@chart_id}/data.tmp.ped", "w") do |file|
+      file.puts "u|#{rand(1_000_000_000)}"
       file.puts "p|!!assets!!"
       file.puts "a|!!ap!!"
       file.puts "v|#{PSExo::VERSION}"
