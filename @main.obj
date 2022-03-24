@@ -161,16 +161,16 @@ if PED_DATA.version_status == "ok" then
     if progress > 1 then
       progress = 1
     end
-    offset = progress * 50
+    offset = (1 - progress) * 20
     for c = 1, #add_str do
       digit = add_str:sub(c, c)
       obj.load("image", PED_DATA.path.."\\score\\b_"..digit..".png")
-      obj.draw(-429 + 16 * c + offset, -292, 0, 0.65 * 0.7)
+      obj.draw(-379 + 16 * c - offset, -292, 0, 0.65 * 0.7)
     end
     for c = 1, #add_str do
       digit = add_str:sub(c, c)
       obj.load("image", PED_DATA.path.."\\score\\f_"..digit..".png")
-      obj.draw(-429 + 16 * c + offset, -292, 0, 0.65 * 0.7)
+      obj.draw(-379 + 16 * c - offset, -292, 0, 0.65 * 0.7)
     end
     obj.copybuffer("cache:add", "tmp")
   end
@@ -181,6 +181,10 @@ if PED_DATA.version_status == "ok" then
   obj.draw()
   obj.copybuffer("obj", "cache:score_bar")
   obj.draw()
+  obj.copybuffer("obj", "cache:b_digit")
+  obj.draw()
+  obj.copybuffer("obj", "cache:digit")
+  obj.draw()
   if (
     PED_DATA.current.offset > 0 and
     ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) < obj.framerate
@@ -188,10 +192,6 @@ if PED_DATA.version_status == "ok" then
     obj.copybuffer("obj", "cache:add")
     obj.draw(0, 0, 0, 1, progress)
   end
-  obj.copybuffer("obj", "cache:b_digit")
-  obj.draw()
-  obj.copybuffer("obj", "cache:digit")
-  obj.draw()
   obj.copybuffer("obj", "tmp")
 end
 @ƒRƒ“ƒ{
