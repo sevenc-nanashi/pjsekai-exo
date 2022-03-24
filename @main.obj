@@ -134,10 +134,17 @@ if PED_DATA.version_status == "ok" then
   local digit
   for c = -8, -1 do
     digit = score_str:sub(c, c)
-    obj.load("image", PED_DATA.path.."\\score\\"..digit..".png")
-    obj.draw(-559 + 24 * (8 + c), -297, 0)
+    obj.load("image", PED_DATA.path.."\\score\\f_"..digit..".png")
+    obj.draw(-559 + 24 * (8 + c), -297, 0, 0.7)
   end
   obj.copybuffer("cache:digit", "tmp")
+  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+  for c = -8, -1 do
+    digit = string.gsub(score_str:sub(c, c), "n", "0")
+    obj.load("image", PED_DATA.path.."\\score\\b_"..digit..".png")
+    obj.draw(-559 + 24 * (8 + c), -297, 0, 0.7)
+  end
+  obj.copybuffer("cache:b_digit", "tmp")
   obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
 
   local add_str
@@ -148,6 +155,8 @@ if PED_DATA.version_status == "ok" then
     PED_DATA.current.offset > 0 and
     ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) < obj.framerate
   ) then
+    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+
     add_str = "p"..tostring(PED_DATA.current.offset)
     progress = (((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) / 8)
     if progress > 1 then
@@ -156,18 +165,31 @@ if PED_DATA.version_status == "ok" then
     offset = progress * 50
     for c = 1, #add_str do
       digit = add_str:sub(c, c)
-      obj.load("image", PED_DATA.path.."\\score\\"..digit..".png")
-      obj.draw(-429 + 16 * c + offset, -292, 0, 0.65, progress * 0.7 + 0.3)
+      obj.load("image", PED_DATA.path.."\\score\\b_"..digit..".png")
+      obj.draw(-429 + 16 * c + offset, -292, 0, 0.65 * 0.7)
     end
+    for c = 1, #add_str do
+      digit = add_str:sub(c, c)
+      obj.load("image", PED_DATA.path.."\\score\\f_"..digit..".png")
+      obj.draw(-429 + 16 * c + offset, -292, 0, 0.65 * 0.7)
+    end
+    obj.copybuffer("cache:add", "tmp")
   end
   obj.copybuffer("cache:add", "tmp")
   obj.copybuffer("obj", "cache:score")
   obj.draw()
-  obj.copybuffer("obj", "cache:add")
-  obj.draw()
   obj.copybuffer("obj", "cache:score_bar_inner")
   obj.draw()
   obj.copybuffer("obj", "cache:score_bar")
+  obj.draw()
+  if (
+    PED_DATA.current.offset > 0 and
+    ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) < obj.framerate
+  ) then
+    obj.copybuffer("obj", "cache:add")
+    obj.draw(0, 0, 0, 1, progress * 0.7 + 0.3)
+  end
+  obj.copybuffer("obj", "cache:b_digit")
   obj.draw()
   obj.copybuffer("obj", "cache:digit")
   obj.draw()
