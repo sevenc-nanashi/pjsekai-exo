@@ -145,7 +145,6 @@ if PED_DATA.version_status == "ok" then
     obj.draw(-559 + 24 * (8 + c), -297, 0, 0.7)
   end
   obj.copybuffer("cache:b_digit", "tmp")
-  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
 
   local add_str
   local offset
@@ -175,7 +174,7 @@ if PED_DATA.version_status == "ok" then
     end
     obj.copybuffer("cache:add", "tmp")
   end
-  obj.copybuffer("cache:add", "tmp")
+  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
   obj.copybuffer("obj", "cache:score")
   obj.draw()
   obj.copybuffer("obj", "cache:score_bar_inner")
@@ -187,7 +186,7 @@ if PED_DATA.version_status == "ok" then
     ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) < obj.framerate
   ) then
     obj.copybuffer("obj", "cache:add")
-    obj.draw(0, 0, 0, 1, progress * 0.7 + 0.3)
+    obj.draw(0, 0, 0, 1, progress)
   end
   obj.copybuffer("obj", "cache:b_digit")
   obj.draw()
