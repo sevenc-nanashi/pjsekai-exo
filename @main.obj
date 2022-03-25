@@ -221,24 +221,27 @@ if PED_DATA.version_status == "ok" then
       local shift = -(#combo_str / 2) + i - 0.5
       local progress = (((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) / 8)
       if progress > 1 then
-        alpha = 0.2 - (progress - 1) * 0.2
+        alpha = 0.5 - (progress - 1) * 0.5
       else
-        alpha = 0.2
+        alpha = 0.5
       end
       if PED_DATA.ap then
-        obj.load("image", PED_DATA.path.."\\combo\\p_"..digit..".png")
+        obj.load("image", PED_DATA.path.."\\combo\\b_"..digit..".png")
       else
         obj.load("image", PED_DATA.path.."\\combo\\n_"..digit..".png")
       end
+      obj.setoption("blend", 1)
       obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, alpha)
       if progress > 1 then
         progress = 1
       end
       if PED_DATA.ap then
         obj.load("image", PED_DATA.path.."\\combo\\b_"..digit..".png")
+        obj.setoption("blend", 0)
         obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, ap_alpha)
         obj.load("image", PED_DATA.path.."\\combo\\p_"..digit..".png")
       end
+      obj.setoption("blend", 0)
       obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax)
     end
     obj.copybuffer("cache:combo_num", "tmp")
