@@ -230,7 +230,7 @@ if PED_DATA.version_status == "ok" then
       else
         obj.load("image", PED_DATA.path.."\\combo\\n_"..digit..".png")
       end
-      obj.setoption("blend", 1)
+      obj.setoption("blend", 0)
       obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, alpha)
       if progress > 1 then
         progress = 1
