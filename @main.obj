@@ -269,3 +269,58 @@ if PED_DATA.version_status == "ok" then
 
   obj.copybuffer("obj", "tmp")
 end
+@AP
+function clamp(x, min, max)
+  if x < min then
+    return min
+  elseif x > max then
+    return max
+  else
+    return x
+  end
+end
+POSITIONS = {
+  -390,
+  -312,
+  -241,
+  -127,
+  -50,
+  27,
+  100,
+  173,
+  249,
+  328,
+  383,
+  417,
+}
+IMAGES = {
+  "A", "L1", "L2", "P", "E1", "R", "F", "E2", "C", "T", "!1", "!2",
+}
+obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+for i = 1, #IMAGES do
+  local image = IMAGES[i]
+  local position = POSITIONS[i]
+  obj.load("image", PED_DATA.path.."\\ap\\"..image..".png")
+  position = position * ((obj.frame - i * 2) * 0.0005 + 1)
+  obj.draw(position, 0, 0, clamp((obj.frame - i * 2) * 0.2, 0, 0.7))
+end
+obj.copybuffer("cache:ap", "tmp")
+obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+for i = 1, #IMAGES do
+  local image = IMAGES[i]
+  local position = POSITIONS[i]
+  position = position * ((obj.frame - i * 2) * 0.0005 + 1)
+  obj.load("image", PED_DATA.path.."\\ap\\"..image..".png")
+  local progress = clamp((obj.frame - i * 2) * 0.05, 0, 1)
+  obj.draw(position, 0, 0, progress * 2, progress * -0.3 + 0.3)
+end
+obj.copybuffer("cache:ap_big", "tmp")
+
+obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+obj.copybuffer("obj", "cache:ap")
+obj.draw()
+obj.copybuffer("obj", "cache:ap_big")
+obj.setoption("blend", 1)
+obj.draw()
+obj.setoption("blend", 0)
+obj.copybuffer("obj", "tmp")
