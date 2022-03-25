@@ -24,8 +24,9 @@ class PSExo
     answers[:background] = prompt.ask("背景ファイル（省略で自動生成）:") || download_background
     answers[:jacket] = prompt.ask("ジャケット（省略でダウンロード）:") || download_jacket
     answers[:assets] = prompt.ask("assetsフォルダ（省略でこのフォルダのassets）:") || File.expand_path("./assets")
-    answers[:movie] = prompt.ask("プレイ動画:") do |q|
-      q.validate ->(value) { File.exist?(process_path(value)) }, "プレイ動画が見付かりません。"
+    answers[:movie] = prompt.ask("プレイ動画（省略可能）:") do |q|
+      q.validate ->(value) { value.empty? || File.exist?(process_path(value)) }, "プレイ動画が見付かりません。"
+      q.default ""
     end
     answers[:ap] = prompt.yes?("AP時のコンボ表示にしますか？").to_s
     answers[:scale] = calc_scale(answers[:jacket]).to_s
