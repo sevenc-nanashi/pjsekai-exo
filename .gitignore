@@ -74,3 +74,4 @@ pack
 *.zip
 *.hash
 !zip_readme.txt
+cacert.pem

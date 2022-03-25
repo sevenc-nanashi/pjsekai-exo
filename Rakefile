@@ -3,6 +3,7 @@
 desc "ocraでスクリプトをビルドします。"
 task :build do
   require "digest"
+  require "http"
 
   hashes = [
     *Dir.glob("*.rb"),
@@ -10,11 +11,15 @@ task :build do
   ].map do |file|
     Digest::SHA256.file(file).hexdigest
   end
+  HTTP.get("https://curl.se/ca/cacert.pem").then do |cert|
+    File.write("./cacert.pem", cert)
+  end
+
   hash = hashes.sort.join("\n")
   if File.exist?("build.hash") && File.read("build.hash") == hash && File.exist?("pjsekai-exo.exe")
     puts "ハッシュが変更されていません。無視します。"
   else
-    sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb exos/*"
+    sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb exos/* cacert.pem"
     File.write("build.hash", hash)
   end
 end
