@@ -19,7 +19,7 @@ task :build do
   if File.exist?("build.hash") && File.read("build.hash") == hash && File.exist?("pjsekai-exo.exe")
     puts "ハッシュが変更されていません。無視します。"
   else
-    sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb exos/* cacert.pem"
+    sh "ocra --gem-all --icon icon.ico --output pjsekai-exo.exe main.rb exos/* cacert.pem @main.obj"
     File.write("build.hash", hash)
   end
 end

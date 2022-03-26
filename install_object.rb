@@ -3,6 +3,10 @@ require "fileutils"
 
 class PSExo
   def install_object
+    if File.exist?(obj_path)
+      CPuts.warn "オブジェクトがスクリプトのディレクトリに見付かりません。オブジェクトの存在確認を行いません。"
+      return
+    end
     path = `powershell.exe -NoLogo -NoProfile -Command "Get-Process aviutl | select -expand path"`
       .force_encoding(Encoding::Windows_31J)
       .encode(Encoding::UTF_8)
@@ -27,9 +31,13 @@ class PSExo
 
   def write_object(path)
     FileUtils.cp(
-      File.exist?("./@プロセカ.obj") ? "./@プロセカ.obj" : "./@main.obj",
+      obj_path,
       path
     )
     CPuts.success "オブジェクトを書き込みました。"
+  end
+
+  def obj_path
+    "#{__dir__}/@main.obj"
   end
 end
