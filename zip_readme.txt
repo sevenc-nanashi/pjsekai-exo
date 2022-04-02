@@ -18,7 +18,7 @@ pjsekai-exoは、プロセカの創作譜面をプロセカ風の動画にする
 
 1. pjsekai-exo.exeを起動して、pedファイル（=Pjsekai Exo Data）と
    exoファイル（AviUtlのオブジェクトファイル）を作成します。
-2. 拡張編集付きAviUtlの`/Plugins/scripts`フォルダに`@プロセカ.obj` を置きます。
+2. 拡張編集付きAviUtlの`/Plugins/script`フォルダに`@プロセカ.obj` を置きます。
 3. 1334 x 750, 60fpsでプロジェクトを作成します。
 4. `dist/譜面ID`内の`00_root.exo`はRoot、`01_main.exo`はシーン1...というように
    ファイルを読み込みます。
