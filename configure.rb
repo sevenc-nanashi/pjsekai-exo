@@ -59,9 +59,13 @@ class PSExo
 
   def download_background
     print "\e[90m背景画像をダウンロードしています...\e[m"
+    data = JSON.parse(
+      http_get("https://fp.sevenc7c.com/levels/#{@chart_id}").body,
+      symbolize_names: true,
+    )
     File.write(
       "./dist/#{@chart_id}/background.png",
-      http_get("https://image-gen.sevenc7c.com/generate/#{@chart_id}.png").body.to_s,
+      http_get("https://fp.sevenc7c.com" + data[:item][:useBackground][:item][:image][:url]).body.to_s,
       mode: "wb",
     )
     puts "\e[92m 完了\e[m"
