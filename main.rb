@@ -14,7 +14,7 @@ require_relative "console"
 # .pedファイルを生成するモジュール。
 #
 class PSExo
-  VERSION = "0.1.oa"
+  VERSION = "0.1.0a"
 
   def start
     logo
