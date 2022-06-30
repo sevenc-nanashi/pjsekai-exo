@@ -49,18 +49,19 @@ pjsekai-exoは、プロセカの創作譜面をプロセカ風の動画にする
 | Layer 5 | シーン3（`背景用`） |
 
 ## 注意
-動画の概要欄などに、自分（=名無し｡）の
-- 名前（`名無し｡`）
-- Twitterのプロフィール
-- このリポジトリへのリンク
-- YouTubeのチャンネル
 
-が分かる文章を載せて下さい。
+動画の概要欄などに、
+
+- `名無し｡`という名前
+- このリポジトリへのリンク
+- `https://sevenc7c.com`へのリンク
+
+が含まれている文章を載せて下さい。
+
 #### 例
+
 ```
 プロセカ風動画作成補助ツール：
-  https://github.com/sevenc-nanashi/pjsekai-exo
-  作成：名無し｡  
-  Twitter: https://twitter.com/sevenc_nanashi
-  YouTube: https://youtube.com/channel/UCv9Wgrqn0ovYhUggSSm5Qtg
+  https://github.com/sevenc-nanashi/pjsekai-soundgen-rust
+  作成：名無し｡ （ https://sevenc7c.com ）
 ```
