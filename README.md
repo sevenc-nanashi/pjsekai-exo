@@ -62,6 +62,6 @@ pjsekai-exoは、プロセカの創作譜面をプロセカ風の動画にする
 
 ```
 プロセカ風動画作成補助ツール：
-  https://github.com/sevenc-nanashi/pjsekai-soundgen-rust
+  https://github.com/sevenc-nanashi/pjsekai-exo
   作成：名無し｡ （ https://sevenc7c.com ）
 ```
