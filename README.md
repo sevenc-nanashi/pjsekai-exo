@@ -14,11 +14,11 @@ pjsekai-exoは、プロセカの創作譜面をプロセカ風の動画にする
 1. [譜面を作る](https://wiki.purplepalette.net/create-charts)
 2. [Sonolus](https://sonolus.com/)で譜面を撮影する
    - [FriedPotato](https://fp.sevenc7c.com)での撮影を推奨しています
-   - 以下の方法のいずれかを使って、UIは消してください。
-     * Sonolus の設定で、それぞれの UI 項目の不透明度を0%にするか
-     * （FriedPotatoの場合は）`Hide UI`オプションを使えば消せます
+   - 以下の方法のいずれかを使ってUIを消してください。
+     * Sonolus の設定で、それぞれの UI項目の不透明度を0%にする
+     * （FriedPotatoの場合）`Hide UI`オプションを使う
 3. 撮影したプレイ動画のファイルをパソコンに転送する
-   - Google Driveなどで
+   - Google Driveなど
 4. [ffmpeg](https://www.ffmpeg.org/)で再エンコードする
    - AviUtlで読み込むため
 5. 下の利用方法に従ってUIを後付けする
