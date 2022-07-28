@@ -30,10 +30,9 @@ class PSExo
   end
 
   def write_object(path)
-    FileUtils.cp(
-      obj_path,
-      path
-    )
+    obj_data = File.read(obj_path, encoding: Encoding::SJIS)
+    obj_data.gsub!("\r\n", "\n")
+    File.write(path, obj_data.gsub("\n", "\r\n"), encoding: Encoding::SJIS)
     CPuts.success "オブジェクトを書き込みました。"
   end
 

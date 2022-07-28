@@ -98,20 +98,9 @@ else
   obj.draw()
   PED_DATA.version_status = "ng"
 end
+----------------------------------------------------------------
 @スコア
 if PED_DATA.version_status == "ok" then
-  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-  obj.load("image", PED_DATA.path.."\\score\\score.png")
-  obj.draw(-387, -317, 0, 0.7)
-  obj.copybuffer("cache:score", "tmp")
-  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-  obj.load("image", PED_DATA.path.."\\score\\bars.png")
-  obj.draw(-387, -317, 0, 0.7)
-  if PED_DATA.current.rank ~= "n" then
-    obj.load("image", PED_DATA.path.."\\score\\"..PED_DATA.current.rank..".png")
-    obj.draw(-607, -317, 0, 0.7)
-  end
-  obj.copybuffer("cache:score_bar", "tmp")
   obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
   obj.load("image", PED_DATA.path.."\\score\\inner.png")
   obj.draw(-387, -317, 0, 0.7)
@@ -124,38 +113,55 @@ if PED_DATA.version_status == "ok" then
     -387 - 185 + 427 * PED_DATA.current.width, -300, 0)
   obj.setoption("blend", 0)
   obj.copybuffer("cache:score_bar_inner", "tmp")
-  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
 
-  local score_str
-  score_str = "nnnnnnnn"..tostring(PED_DATA.current.score)
+  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+  -- score background
+  obj.load("image", PED_DATA.path.."\\score\\score.png")
+  obj.draw(-387, -317, 0, 0.7)
+
+  -- score bar inner
+  obj.copybuffer("obj", "cache:score_bar_inner")
+  obj.draw()
+
+  -- score bar
+  obj.load("image", PED_DATA.path.."\\score\\bars.png")
+  obj.draw(-387, -317, 0, 0.7)
+
+  -- score rank
+  if PED_DATA.current.rank ~= "n" then
+    obj.load("image", PED_DATA.path.."\\score\\"..PED_DATA.current.rank..".png")
+    obj.draw(-607, -317, 0, 0.7)
+  end
+
+  -- score digits
+  local score_str = "nnnnnnnn"..tostring(PED_DATA.current.score)
+  local digit
   if PED_DATA.current.score == 0 then
     score_str = "nnnnnnnn"
   end
-  local digit
-  for c = -8, -1 do
-    digit = score_str:sub(c, c)
-    obj.load("image", PED_DATA.path.."\\score\\f_"..digit..".png")
-    obj.draw(-559 + 24 * (8 + c), -297, 0, 0.7)
-  end
-  obj.copybuffer("cache:digit", "tmp")
-  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
+
+  ---- background
   for c = -8, -1 do
     digit = string.gsub(score_str:sub(c, c), "n", "0")
     obj.load("image", PED_DATA.path.."\\score\\b_"..digit..".png")
     obj.draw(-559 + 24 * (8 + c), -297, 0, 0.7)
   end
-  obj.copybuffer("cache:b_digit", "tmp")
 
-  local add_str
-  local offset
-  local progress
+  ---- foreground
+  for c = -8, -1 do
+    digit = score_str:sub(c, c)
+    obj.load("image", PED_DATA.path.."\\score\\f_"..digit..".png")
+    obj.draw(-559 + 24 * (8 + c), -297, 0, 0.7)
+  end
 
+  -- score diff
   if (
     PED_DATA.current.offset > 0 and
     ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) < obj.framerate
   ) then
-    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-
+    local add_str
+    local offset
+    local progress
     add_str = "p"..tostring(PED_DATA.current.offset)
     progress = (((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) / 8)
     if progress > 1 then
@@ -165,43 +171,25 @@ if PED_DATA.version_status == "ok" then
     for c = 1, #add_str do
       digit = add_str:sub(c, c)
       obj.load("image", PED_DATA.path.."\\score\\b_"..digit..".png")
-      obj.draw(-379 + 16 * c - offset, -292, 0, 0.65 * 0.7)
+      obj.draw(-379 + 16 * c - offset, -292, 0, 0.65 * 0.7, progress)
     end
     for c = 1, #add_str do
       digit = add_str:sub(c, c)
       obj.load("image", PED_DATA.path.."\\score\\f_"..digit..".png")
-      obj.draw(-379 + 16 * c - offset, -292, 0, 0.65 * 0.7)
+      obj.draw(-379 + 16 * c - offset, -292, 0, 0.65 * 0.7, progress)
     end
-    obj.copybuffer("cache:add", "tmp")
-  end
-  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-  obj.copybuffer("obj", "cache:score")
-  obj.draw()
-  obj.copybuffer("obj", "cache:score_bar_inner")
-  obj.draw()
-  obj.copybuffer("obj", "cache:score_bar")
-  obj.draw()
-  obj.copybuffer("obj", "cache:b_digit")
-  obj.draw()
-  obj.copybuffer("obj", "cache:digit")
-  obj.draw()
-  if (
-    PED_DATA.current.offset > 0 and
-    ((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) < obj.framerate
-  ) then
-    obj.copybuffer("obj", "cache:add")
-    obj.draw(0, 0, 0, 1, progress)
   end
   obj.copybuffer("obj", "tmp")
 end
+----------------------------------------------------------------
 @コンボ
 if PED_DATA.version_status == "ok" then
-  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
   local ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1.25 / 2)
   if ap_alpha > 1 then
     ap_alpha = 1
   end
   if PED_DATA.current.combo > 0 then
+    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
     if PED_DATA.ap then
       obj.load("image", PED_DATA.path.."\\combo\\b_c.png")
       obj.draw(474, -132, 0, 0.7, ap_alpha)
@@ -210,8 +198,6 @@ if PED_DATA.version_status == "ok" then
       obj.load("image", PED_DATA.path.."\\combo\\n_c.png")
     end
     obj.draw(474, -132, 0, 0.7)
-    obj.copybuffer("cache:combo", "tmp")
-    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
     local combo_str
     local alpha
     local fax = 0.678321678321678
@@ -244,34 +230,26 @@ if PED_DATA.version_status == "ok" then
       obj.setoption("blend", 0)
       obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax)
     end
-    obj.copybuffer("cache:combo_num", "tmp")
-    obj.copybuffer("obj", "cache:combo")
-    obj.draw()
-    obj.copybuffer("obj", "cache:combo_num")
-    obj.draw()
+    obj.copybuffer("obj", "tmp")
   end
-
-  obj.copybuffer("obj", "tmp")
-
 end
+----------------------------------------------------------------
 @判定
 if PED_DATA.version_status == "ok" then
+  obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
   if PED_DATA.current.time > 0 then
-    obj.setoption("drawtarget", "tempbuffer", obj.screen_w, obj.screen_h)
-    obj.load("image", PED_DATA.path.."\\perfect.png")
     local progress = (((obj.frame - OFFSET) - (PED_DATA.current.time * obj.framerate)) / 4)
     if progress < 1 then
+      obj.load("image", PED_DATA.path.."\\perfect.png")
       obj.draw(0, 90, 0, 0.3 + 0.4 * progress, progress)
     elseif progress < 5 then
+      obj.load("image", PED_DATA.path.."\\perfect.png")
       obj.draw(0, 90, 0, 0.7, 1)
     end
-    obj.copybuffer("cache:perfect", "tmp")
-    obj.copybuffer("obj", "cache:perfect")
-    obj.draw()
   end
-
   obj.copybuffer("obj", "tmp")
 end
+----------------------------------------------------------------
 @AP
 function clamp(x, min, max)
   if x < min then
