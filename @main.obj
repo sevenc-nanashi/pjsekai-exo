@@ -6,6 +6,7 @@
 
 if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
   debug_print("[pjsekai-exo] Loading ped data in " .. file)
+  time = os.clock()
   PED_DATA = {}
   PED_DATA.scores = {}
   PED_DATA.path = nil
@@ -41,9 +42,12 @@ if obj.track1 ~= 1 or not PED_DATA or PED_DATA.file ~= file then
         end
       end
     end
+    debug_print("[pjsekai-exo] Successfully loaded ped data")
+    debug_print("[pjsekai-exo] Time: " .. os.clock() - time)
     fp:close()
   else
     PED_DATA.loaded = "not_found"
+    debug_print("[pjsekai-exo] Couldn't find ped data file")
   end
 end
 if PED_DATA.version == "{version}" or "{version}" == "{ver".."sion}" then
