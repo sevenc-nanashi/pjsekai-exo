@@ -60,7 +60,7 @@ class PSExo
   def download_background
     print "\e[90m背景画像をダウンロードしています...\e[m"
     data = JSON.parse(
-      http_get("https://fp.sevenc7c.com/levels/frpt-#{@chart_id}").body,
+      http_get("https://fp.sevenc7c.com/sonolus/levels/frpt-#{@chart_id}").body,
       symbolize_names: true,
     )
     File.write(
