@@ -15,7 +15,7 @@ class PSExo
       q.validate(/[A-Za-z0-9]{12}/, "譜面IDのフォーマットに沿っていません。")
     end
 
-    get = http_get("https://servers.purplepalette.net/levels/#{@chart_id}")
+    get = http_get("https://servers.purplepalette.net/sonolus/levels/#{@chart_id}")
     if get.code != 200
       CPuts.error "譜面が見つかりませんでした。"
       exit 1

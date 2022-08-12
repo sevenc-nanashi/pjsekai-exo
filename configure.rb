@@ -75,7 +75,7 @@ class PSExo
   def download_jacket
     print "\e[90mジャケットをダウンロードしています...\e[m"
     data = JSON.parse(
-      http_get("https://servers.purplepalette.net/levels/#{@chart_id}").body,
+      http_get("https://servers.purplepalette.net/sonolus/levels/#{@chart_id}").body,
       symbolize_names: true,
     )
     File.write(
