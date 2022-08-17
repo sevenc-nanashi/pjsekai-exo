@@ -188,7 +188,7 @@ end
 ----------------------------------------------------------------
 @コンボ
 if PED_DATA.version_status == "ok" then
-  local ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1.25 / 2)
+  local ap_alpha = (math.sin(obj.time * math.pi) + 1) * (1 / 2)
   if ap_alpha > 1 then
     ap_alpha = 1
   end
@@ -216,12 +216,12 @@ if PED_DATA.version_status == "ok" then
         alpha = 0.5
       end
       if PED_DATA.ap then
-        obj.load("image", PED_DATA.path.."\\combo\\b_"..digit..".png")
+        obj.load("image", PED_DATA.path.."\\combo\\p_"..digit..".png")
       else
         obj.load("image", PED_DATA.path.."\\combo\\n_"..digit..".png")
       end
       obj.setoption("blend", 0)
-      obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, alpha)
+      obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.55 * progress) * fax, alpha)
       if progress > 1 then
         progress = 1
       end
@@ -230,6 +230,10 @@ if PED_DATA.version_status == "ok" then
         obj.setoption("blend", 0)
         obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, ap_alpha)
         obj.load("image", PED_DATA.path.."\\combo\\p_"..digit..".png")
+        if progress > 0.9 then
+          obj.effect("グロー", "強さ",  progress * 12, "ぼかし", 5)
+          obj.effect("ライト", "強さ",  progress * 30, "逆光", 1)
+        end
       end
       obj.setoption("blend", 0)
       obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax)
