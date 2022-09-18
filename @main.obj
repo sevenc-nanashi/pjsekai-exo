@@ -223,20 +223,25 @@ if PED_DATA.version_status == "ok" then
       obj.setoption("blend", 0)
       obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.55 * progress) * fax, alpha)
       if progress > 1 then
-        progress = 1
+        clamp_progress = 1
+      else
+        clamp_progress = progress
       end
       if PED_DATA.ap then
         obj.load("image", PED_DATA.path.."\\combo\\b_"..digit..".png")
         obj.setoption("blend", 0)
-        obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax, ap_alpha)
+        obj.draw(474 + 36 * (shift * (clamp_progress + 1)), -64, 0, (0.5 + 0.5 * clamp_progress) * fax, ap_alpha)
         obj.load("image", PED_DATA.path.."\\combo\\p_"..digit..".png")
-        if progress > 0.9 then
+        if progress > 0.75 and progress < 1.25 then
           obj.effect("グロー", "強さ",  progress * 12, "ぼかし", 5)
           obj.effect("ライト", "強さ",  progress * 30, "逆光", 1)
+        elseif progress >= 1.25 and progress < 1.75 then
+          obj.effect("グロー", "強さ",  15 * (1 - (progress - 1.25) / 0.5), "ぼかし", 5)
+          obj.effect("ライト", "強さ",  37.5 * (1 - (progress - 1.25) / 0.5), "逆光", 1)
         end
       end
       obj.setoption("blend", 0)
-      obj.draw(474 + 36 * (shift * (progress + 1)), -64, 0, (0.5 + 0.5 * progress) * fax)
+      obj.draw(474 + 36 * (shift * (clamp_progress + 1)), -64, 0, (0.5 + 0.5 * clamp_progress) * fax)
     end
     obj.copybuffer("obj", "tmp")
   end
