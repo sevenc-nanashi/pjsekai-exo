@@ -1,2 +1,2 @@
-*.exo linguist-language=ini
-*.obj linguist-language=lua
+*.exo linguist-language=ini eol=crlf
+*.obj linguist-language=lua eol=crlf
